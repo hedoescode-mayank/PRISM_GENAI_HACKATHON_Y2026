@@ -1,0 +1,13 @@
+.git
+.venv
+.cache
+__pycache__
+*.pyc
+*.egg-info
+source
+tests
+examples
+scripts
+*.md
+*.jsonl
+*results.json

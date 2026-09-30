@@ -1,0 +1,71 @@
+{
+  "query": "The mobile phone screen is cracked and flashes intermittently.",
+  "query_variations": [
+    "I am experiencing this issue: The mobile phone screen is cracked and flashes intermittently.",
+    "My Galaxy phone has this problem: The mobile phone screen is cracked and flashes intermittently.",
+    "How can I troubleshoot this: The mobile phone screen is cracked and flashes intermittently?",
+    "Please diagnose the device symptom: The mobile phone screen is cracked and flashes intermittently.",
+    "The issue in brief: The mobile phone screen is cracked and flashes intermittently.",
+    "Help, The mobile phone screen is cracked and flashes intermittently and I cannot fix it.",
+    "The mobile phone screen is cracked and flashes intermittently - what setting should I check?",
+    "Device complaint keywords: The mobile phone screen is cracked and flashes intermittently.",
+    "Plz help with this: The moble phone screen is cracked and flashes intermittently."
+  ],
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Screen Damage Troubleshooting",
+        "title": "Screen display damage",
+        "actions": [
+          {
+            "actionName": "Back Up Phone Data",
+            "description": "It will secure your phone data",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Open Settings.",
+                  "Tap Accounts and backup.",
+                  "Tap Back up data."
+                ],
+                "validationDeeplink": {
+                  "deeplink": "bixby://masked/val/266037d0c5",
+                  "key": "Back up data (Samsung Cloud)",
+                  "resultType": "boolean",
+                  "condition": "equal",
+                  "value": "True"
+                },
+                "actionableDeeplink": {
+                  "deeplink": "bixby://masked/act/b3ed3ed663",
+                  "description": "Enables data backup to Samsung Cloud via device Settings on the device.",
+                  "message": "Enable Back up data (Samsung Cloud)",
+                  "originalType": "onURL"
+                }
+              }
+            ],
+            "category": "auto"
+          },
+          {
+            "actionName": "Schedule Screen Repair Service",
+            "description": "It will arrange screen repair service",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Contact Samsung Support to arrange screen repair service.",
+                  "Describe the cracked screen and intermittent flashing."
+                ]
+              }
+            ],
+            "category": "manual"
+          }
+        ],
+        "score": 0.95
+      }
+    ]
+  },
+  "meta": {
+    "latency_ms": 2,
+    "cache_hit": true,
+    "model": "local-source-backed",
+    "cost_usd": 0.0
+  }
+}

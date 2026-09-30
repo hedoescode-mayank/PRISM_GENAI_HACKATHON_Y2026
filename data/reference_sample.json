@@ -1,0 +1,60 @@
+{
+  "source": "Theme 02 input kit sample_output.json; content corrected to PDF wording and sample complaint",
+  "intent": "screen_damage_flashing_sample",
+  "canonical_query": "The mobile phone screen is cracked and flashes intermittently.",
+  "aliases": [],
+  "target": "Back up data (Samsung Cloud)",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Screen Damage Troubleshooting",
+        "title": "Screen display damage",
+        "score": 0.95,
+        "actions": [
+          {
+            "actionName": "Back Up Phone Data",
+            "description": "It will secure your phone data",
+            "category": "auto",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Open Settings.",
+                  "Tap Accounts and backup.",
+                  "Tap Back up data."
+                ],
+                "actionableDeeplink": {
+                  "deeplink": "bixby://masked/act/b3ed3ed663",
+                  "description": "Enables data backup to Samsung Cloud via device Settings on the device.",
+                  "message": "Enable Back up data (Samsung Cloud)",
+                  "originalType": "onURL"
+                },
+                "validationDeeplink": {
+                  "deeplink": "bixby://masked/val/266037d0c5",
+                  "key": "Back up data (Samsung Cloud)",
+                  "resultType": "boolean",
+                  "condition": "equal",
+                  "value": "True"
+                }
+              }
+            ]
+          },
+          {
+            "actionName": "Schedule Screen Repair Service",
+            "description": "It will arrange screen repair service",
+            "category": "manual",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Contact Samsung Support to arrange screen repair service.",
+                  "Describe the cracked screen and intermittent flashing."
+                ],
+                "actionableDeeplink": null,
+                "validationDeeplink": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "query": "My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+  "query_variations": [
+    "I am experiencing this issue: My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+    "My Galaxy phone has this problem: My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+    "How can I troubleshoot this: My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage?",
+    "Please diagnose the device symptom: My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+    "The issue in brief: My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+    "Help, My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage and I cannot fix it.",
+    "My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage - what setting should I check?",
+    "Device complaint keywords: My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+    "Plz help with this: My Galxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage."
+  ],
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Blank Display Troubleshooting",
+        "title": "Blank display",
+        "actions": [
+          {
+            "actionName": "Force Restart Device",
+            "description": "It will restart the unresponsive device",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Press and hold Power and Volume down together for 20 seconds."
+                ]
+              }
+            ],
+            "category": "critical"
+          }
+        ],
+        "score": 0.75
+      }
+    ]
+  },
+  "meta": {
+    "latency_ms": 30,
+    "cache_hit": false,
+    "model": "local-source-backed",
+    "cost_usd": 0.0
+  }
+}

@@ -1,0 +1,6 @@
+# Supplied source files are byte-preserved, including CRLF line endings.
+source/** -diff
+data/deeplinks.json -diff
+data/siis_responses.json -diff
+data/theme02_input.txt -diff
+data/theme02_sample_output.json -diff

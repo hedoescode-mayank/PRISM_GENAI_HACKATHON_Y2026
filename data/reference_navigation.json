@@ -1,0 +1,45 @@
+{
+  "source": "Original PDF Appendix B, pages 6; transcription of the worked action and approved placeholder",
+  "intent": "navigation_wrong_axis_after_app",
+  "canonical_query": "The mobile phone swipe navigation moves up or down instead of left or right after downloading an app",
+  "aliases": [
+    "phone swipe gestures wrong direction after app install",
+    "swipe navigation broken after installing an app",
+    "My phone's gesture navigation got messed up by a new app and swipes go the wrong way",
+    "Why does my phone swipe vertically when I try to swipe sideways after downloading an app?"
+  ],
+  "target": "Navigation bar",
+  "response": {
+    "contexts": [
+      {
+        "goal": "Follow these steps to perform this Swipe Navigation Troubleshooting",
+        "title": "Swipe navigation settings",
+        "score": 0.93,
+        "actions": [
+          {
+            "actionName": "Configure Navigation Bar Settings",
+            "description": "It will let you choose navigation type",
+            "category": "auto",
+            "stepGroups": [
+              {
+                "steps": [
+                  "Navigate to and open Settings.",
+                  "Tap on Display.",
+                  "Tap on Navigation bar.",
+                  "Select your preferred navigation type between Buttons and Swipe gestures.",
+                  "Optionally toggle on Gesture hint to display guidance lines at the bottom of the screen."
+                ],
+                "actionableDeeplink": {
+                  "description": "Open navigation bar settings under Display",
+                  "message": "Choose navigation type in Display settings",
+                  "deeplink": "bixby://dummy_positive"
+                },
+                "validationDeeplink": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

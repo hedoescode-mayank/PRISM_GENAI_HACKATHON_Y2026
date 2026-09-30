@@ -1,0 +1,422 @@
+{
+  "method": "in_process_api_pipeline_with_supplied_siis_lookup",
+  "supplied_schema": "/home/vezzy/Create/samsungv1/source/theme02/schema.py",
+  "input_file": "theme02_input.txt",
+  "input_cases": 20,
+  "matched": 10,
+  "no_match": 10,
+  "validation_failures": 0,
+  "cases": [
+    {
+      "index": 1,
+      "query": "My Samsung A115G tablet screen flashes and then goes completely blank whenever I tap to open an email in Gmail, and after it works for a short time it goes blank again.",
+      "mapped_siis_id": "row_1",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 2,
+      "query": "My Galaxy S22 screen turns completely blank or white and no text appears when I search for a stock price or use the Smart Tutor app, and it happens with other apps too.",
+      "mapped_siis_id": "row_2",
+      "status": "matched",
+      "goals": 1,
+      "actions": 5,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 3,
+      "query": "My Galaxy Z Flip 7 screen went completely black, so I can't see or interact with the phone, and I'm unable to use Smart Switch or any other method to transfer my data.",
+      "mapped_siis_id": "row_3",
+      "status": "matched",
+      "goals": 1,
+      "actions": 3,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 4,
+      "query": "My Samsung Galaxy A15/A16 screen suddenly went completely black on its own after about a month of use. It doesn't display anything, even when I try to turn it on.",
+      "mapped_siis_id": "row_4",
+      "status": "matched",
+      "goals": 1,
+      "actions": 5,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 5,
+      "query": "My Galaxy tablet screen stays completely blank when I try to use Smart Switch to scan the QR code for transferring data from my Galaxy S25 phone, so the transfer can't proceed.",
+      "mapped_siis_id": "row_5",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 6,
+      "query": "My tablet's screen stays dark and only three app icons are lit while the rest are dark and won't open, so nothing loads on the screen and I can't use the device.",
+      "mapped_siis_id": "row_7",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 7,
+      "query": "My new Samsung phone's main screen stays small and doesn't fill the whole display; I can't make it expand to full size and I've never seen this before.",
+      "mapped_siis_id": "row_8",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 8,
+      "query": "My Galaxy Flip 7 inner screen stopped working by itself; it shows no image and doesn't respond to touch, while the outer cover screen still works.",
+      "mapped_siis_id": "row_9",
+      "status": "matched",
+      "goals": 1,
+      "actions": 2,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 9,
+      "query": "My Samsung Galaxy Z Flip 6 screen flickers and goes blank whenever I open it, so I can't see anything or access the settings, which stops me from using the phone.",
+      "mapped_siis_id": "row_10",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 10,
+      "query": "My Galaxy Flip 6 screen is half black—one side of the display is completely dark while the other side works fine, so I can't access the device normally.",
+      "mapped_siis_id": "row_11",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 11,
+      "query": "My Galaxy S25 has a floating circle that constantly hovers on my screen and gives me quick shortcuts to recent apps, home, back, screen off, volume control, and more; I want to remove it.",
+      "mapped_siis_id": "row_12",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 12,
+      "query": "My Galaxy S22 screen stays blank and doesn't show any activation message or anything else when I turn it on after the carrier deactivated the old phone.",
+      "mapped_siis_id": "row_13",
+      "status": "matched",
+      "goals": 1,
+      "actions": 5,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 13,
+      "query": "My Galaxy phone's screen is completely cracked, it's a total crack and I can't use the device.",
+      "mapped_siis_id": "row_14",
+      "status": "matched",
+      "goals": 1,
+      "actions": 1,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 14,
+      "query": "My Galaxy S26 Ultra only shows a blue (or black) screen with tiny text when I try to turn it on, and it won't start up. I tried holding the power button but it doesn't help.",
+      "mapped_siis_id": "row_15",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 15,
+      "query": "My Samsung S***** Ultra screen flashes extremely quickly (in milliseconds) whenever I plug in a charger, making the display unusable for a short period.",
+      "mapped_siis_id": "row_16",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 16,
+      "query": "1. \"My Galaxy S24 screen goes completely blank, just a dark screen with occasional scrolling and no visible content, so I can't see anything or use Smart Switch to transfer data.\"",
+      "mapped_siis_id": "row_17",
+      "status": "matched",
+      "goals": 1,
+      "actions": 3,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 17,
+      "query": "1. \"My Galaxy Z Flip 7 screen is cracked again right where it folds.\" 2. \"The touch doesn't work on certain parts of the screen.\" 3. \"I can hardly see anything on the display.\"",
+      "mapped_siis_id": "row_19",
+      "status": "matched",
+      "goals": 1,
+      "actions": 1,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 18,
+      "query": "My Galaxy A17 screen looks distorted right after I received the phone, and I need a diagnostic test.",
+      "mapped_siis_id": "row_20",
+      "status": "no_match",
+      "goals": 0,
+      "actions": 0,
+      "cache_hit": false,
+      "supplied_schema_valid": null
+    },
+    {
+      "index": 19,
+      "query": "My Galaxy S22 screen inputs are delayed and the touch responsiveness is laggy, causing a noticeable delay when I try to interact with the phone.",
+      "mapped_siis_id": "row_21",
+      "status": "matched",
+      "goals": 1,
+      "actions": 3,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    },
+    {
+      "index": 20,
+      "query": "My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+      "mapped_siis_id": "row_22",
+      "status": "matched",
+      "goals": 1,
+      "actions": 1,
+      "cache_hit": false,
+      "supplied_schema_valid": true
+    }
+  ],
+  "mapping_gap_count": 0,
+  "mapping_gaps": [],
+  "unrepresented_siis_ids": [],
+  "siis_json": {
+    "input_cases": 20,
+    "matched": 10,
+    "no_match": 10,
+    "validation_failures": 0,
+    "cases": [
+      {
+        "index": 1,
+        "id": "row_1",
+        "query": "1. My Samsung A115G tablet screen flashes and then goes completely blank whenever I tap to open an email in Gmail, and after it works for a short time it goes blank again.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 2,
+        "id": "row_2",
+        "query": "My Galaxy S22 screen turns completely blank or white and no text appears when I search for a stock price or use the Smart Tutor app, and it happens with other apps too.",
+        "status": "matched",
+        "goals": 1,
+        "actions": 5,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 3,
+        "id": "row_3",
+        "query": "My Galaxy Z Flip 7 screen went completely black, so I can't see or interact with the phone, and I'm unable to use Smart Switch or any other method to transfer my data.",
+        "status": "matched",
+        "goals": 1,
+        "actions": 3,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 4,
+        "id": "row_4",
+        "query": "My Samsung Galaxy A15/A16 screen suddenly went completely black on its own after about a month of use. It doesn't display anything, even when I try to turn it on.",
+        "status": "matched",
+        "goals": 1,
+        "actions": 5,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 5,
+        "id": "row_5",
+        "query": "My Galaxy tablet screen stays completely blank when I try to use Smart Switch to scan the QR code for transferring data from my Galaxy S25 phone, so the transfer can't proceed.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 6,
+        "id": "row_7",
+        "query": "My tablet's screen stays dark and only three app icons are lit while the rest are dark and won't open, so nothing loads on the screen and I can't use the device.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 7,
+        "id": "row_8",
+        "query": "My new Samsung phone's main screen stays small and doesn't fill the whole display; I can't make it expand to full size and I've never seen this before.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 8,
+        "id": "row_9",
+        "query": "My Galaxy Flip 7 inner screen stopped working by itself; it shows no image and doesn't respond to touch, while the outer cover screen still works.",
+        "status": "matched",
+        "goals": 1,
+        "actions": 2,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 9,
+        "id": "row_10",
+        "query": "My Samsung Galaxy Z Flip 6 screen flickers and goes blank whenever I open it, so I can't see anything or access the settings, which stops me from using the phone.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 10,
+        "id": "row_11",
+        "query": "My Galaxy Flip 6 screen is half black—one side of the display is completely dark while the other side works fine, so I can't access the device normally.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 11,
+        "id": "row_12",
+        "query": "My Galaxy S25 has a floating circle that constantly hovers on my screen and gives me quick shortcuts to recent apps, home, back, screen off, volume control, and more; I want to remove it.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 12,
+        "id": "row_13",
+        "query": "My Galaxy S22 screen stays blank and doesn't show any activation message or anything else when I turn it on after the carrier deactivated the old phone.",
+        "status": "matched",
+        "goals": 1,
+        "actions": 5,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 13,
+        "id": "row_14",
+        "query": "My Galaxy phone's screen is completely cracked, it's a total crack and I can't use the device.",
+        "status": "matched",
+        "goals": 1,
+        "actions": 1,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 14,
+        "id": "row_15",
+        "query": "My Galaxy S26 Ultra only shows a blue (or black) screen with tiny text when I try to turn it on, and it won't start up. I tried holding the power button but it doesn't help.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 15,
+        "id": "row_16",
+        "query": "My Samsung S***** Ultra screen flashes extremely quickly (in milliseconds) whenever I plug in a charger, making the display unusable for a short period.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 16,
+        "id": "row_17",
+        "query": "1. \"My Galaxy S24 screen goes completely blank, just a dark screen with occasional scrolling and no visible content, so I can't see anything or use Smart Switch to transfer data.\"",
+        "status": "matched",
+        "goals": 1,
+        "actions": 3,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 17,
+        "id": "row_19",
+        "query": "1. \"My Galaxy Z Flip 7 screen is cracked again right where it folds.\"\n2. \"The touch doesn't work on certain parts of the screen.\"\n3. \"I can hardly see anything on the display.\"",
+        "status": "matched",
+        "goals": 1,
+        "actions": 1,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 18,
+        "id": "row_20",
+        "query": "My Galaxy A17 screen looks distorted right after I received the phone, and I need a diagnostic test.",
+        "status": "no_match",
+        "goals": 0,
+        "actions": 0,
+        "cache_hit": false,
+        "supplied_schema_valid": null
+      },
+      {
+        "index": 19,
+        "id": "row_21",
+        "query": "My Galaxy S22 screen inputs are delayed and the touch responsiveness is laggy, causing a noticeable delay when I try to interact with the phone.",
+        "status": "matched",
+        "goals": 1,
+        "actions": 3,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      },
+      {
+        "index": 20,
+        "id": "row_22",
+        "query": "My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+        "status": "matched",
+        "goals": 1,
+        "actions": 1,
+        "cache_hit": false,
+        "supplied_schema_valid": true
+      }
+    ]
+  }
+}

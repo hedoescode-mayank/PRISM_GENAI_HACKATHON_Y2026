@@ -1,0 +1,62 @@
+{
+  "method": "in_process_pipeline_excluding_startup",
+  "query": "My Galaxy S24 Ultra screen is completely black and won't turn on, even though the phone powers on, rings, and otherwise works; there is no physical damage.",
+  "catalog_entries": 577,
+  "siis_entries": 20,
+  "cold": {
+    "requests": 30,
+    "cache_hits": 0,
+    "matched_plans": 30,
+    "min_ms": 19.123,
+    "mean_ms": 20.51,
+    "p50_ms": 20.603,
+    "p95_ms": 21.509,
+    "p99_ms": 21.563,
+    "max_ms": 21.583
+  },
+  "cached": {
+    "requests": 30,
+    "cache_hits": 30,
+    "matched_plans": 30,
+    "min_ms": 0.409,
+    "mean_ms": 0.509,
+    "p50_ms": 0.477,
+    "p95_ms": 0.739,
+    "p99_ms": 0.777,
+    "max_ms": 0.787
+  },
+  "targets": {
+    "cold_p95_le_8000_ms": true,
+    "cached_p95_le_300_ms": true
+  },
+  "http_loopback": {
+    "method": "localhost_http_roundtrip_excluding_server_startup",
+    "cold": {
+      "requests": 30,
+      "cache_hits": 0,
+      "matched_plans": 30,
+      "min_ms": 21.096,
+      "mean_ms": 22.228,
+      "p50_ms": 22.032,
+      "p95_ms": 23.164,
+      "p99_ms": 27.052,
+      "max_ms": 28.622
+    },
+    "cached": {
+      "requests": 30,
+      "cache_hits": 30,
+      "matched_plans": 30,
+      "min_ms": 1.477,
+      "mean_ms": 1.679,
+      "p50_ms": 1.673,
+      "p95_ms": 1.86,
+      "p99_ms": 1.915,
+      "max_ms": 1.935
+    },
+    "targets": {
+      "cold_p95_le_8000_ms": true,
+      "cached_p95_le_300_ms": true
+    }
+  },
+  "warnings": []
+}
