@@ -1,177 +1,356 @@
 # Smart Guided Troubleshooting Engine
 
-*Turning informal Galaxy complaints into safe, actionable, and device-aware troubleshooting plans.*
+> Turning informal Galaxy complaints into safe, actionable, and device-aware troubleshooting plans.
 
-**Samsung PRISM Generative AI Hackathon**  
-**3rd Edition 2026–27**  
-**Theme 2**  
-
-### Team Details
-*   **Team Name:** Neural Bits
-*   **College:** SRMIST Kattankulathur, Chennai
-*   **Members:** 
-    *   Mayank Dadheech (md6074@srmist.edu.in)
-    *   Ritwik Swarnkar (rs4415@srmist.edu.in)
-    *   Arartika Lahiri (al4151@srmist.edu.in)
-    *   Harshit Agarwal (ha4020@srmist.edu.in)
-*   **Submission GitHub:** [https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026.git](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026.git)
+**Samsung PRISM Generative AI Hackathon | 3rd Edition 2026-27 | Theme 02**
 
 ---
 
-## 1. Problem Statement
+| | |
+| :--- | :--- |
+| **Team** | Neural Bits |
+| **College** | SRMIST Kattankulathur, Chennai |
+| **Member 1** | Mayank Dadheech (md6074@srmist.edu.in) |
+| **Member 2** | Ritwik Swarnkar (rs4415@srmist.edu.in) |
+| **Member 3** | Arartika Lahiri (al4151@srmist.edu.in) |
+| **Member 4** | Harshit Agarwal (ha4020@srmist.edu.in) |
+| **Repository** | [hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026) |
+| **Presentation** | [Google Drive (PPT)](https://docs.google.com/presentation/d/1MRMmZjbTeTrRWGfs9O5P5pdXghFAcPSJ/edit?usp=drive_link&ouid=106014727809161104757&rtpof=true&sd=true) |
+| **Demo Video** | [YouTube](https://youtube.com/watch?v=qMPpPkZngw8&feature=shared) |
 
-When users experience technical issues with their Galaxy devices, they rarely use precise technical terminology. Instead, they describe problems informally, such as:
+---
+
+## Product UI
+
+![Smart Guided Troubleshooting Engine UI](docs/images/architecture_overview.png)
+
+---
+
+## 1. Problem
+
+Users describe Galaxy device issues informally:
+
 - *"My screen is cracked and flashes intermittently."*
 - *"My phone rings, but the screen stays black."*
 - *"I know the setting exists, but I don't know where to find it."*
 
-This creates a complex support challenge. The system must navigate from an informal complaint through issue interpretation, knowledge retrieval, safe action selection, exact device routing, and verification. 
+The support challenge requires navigating from an informal complaint through issue interpretation, knowledge retrieval, safe action selection, exact settings/device routing, and verification.
 
-The challenge brief outlines that this manual interpretation and navigation triage takes roughly **15 minutes per scenario**. The problem statement target is to build an automated engine that can return actionable plans in **under 300 ms** for previously encountered issues (Note: these are the challenge's problem-statement targets, not our final end-to-end system results).
+**Problem-statement context (challenge targets, not project results):**
+- The challenge brief describes manual interpretation/navigation as roughly **15 minutes per scenario**.
+- The problem statement specifies a target of **under 300 ms** for previously encountered issues through a fast path.
+
+---
 
 ## 2. Our Solution
 
 The engine accepts an informal complaint and converts it into a structured troubleshooting plan backed by supplied troubleshooting knowledge and a validated deep-link catalog. Instead of allowing generated text to directly determine device actions, the system applies deterministic retrieval, routing, ordering, and validation before returning the result.
 
-**Pipeline Flow:**  
-`Complaint` → `Query Enrichment` → `SIIS Retrieval / Extraction` → `Catalog Retrieval` → `Exact-Screen Resolution` → `Action Ordering` → `Validation` → `Structured Plan` → `Cache / REST API`
+```
+Complaint
+  -> Query Enrichment
+    -> SIIS Retrieval / Extraction
+      -> Catalog Retrieval
+        -> Exact-Screen Resolution
+          -> Action Ordering
+            -> Validation
+              -> Structured Plan
+                -> Cache / REST API
+```
 
-## 3. Why This Is Not Just An LLM Wrapper
+**This is not just an LLM wrapper. It is a controlled bridge from natural language to verified device action.**
 
-This is not a generic AI chatbot. **Generation is treated as untrusted.**
+---
 
-*   **Separation of Concerns:** Language flexibility (understanding the user) is strictly separated from action authority (deciding what the device should do).
-*   **Source-Backed Evidence:** All troubleshooting content must be derived from the supplied source evidence.
-*   **Enrichment as an Aid:** Query enrichment is used solely as a retrieval aid, not as a source of new evidence or facts.
-*   **Strict Routing:** Deep-links must exactly match the supplied catalog. Exact-screen routing actively rejects broad or parent-menu substitutions.
-*   **Dependency Ordering:** Extracted actions are explicitly dependency-ordered (e.g., backing up data before factory reset).
-*   **Schema Enforcement:** Strict schema validation occurs before the response is returned. Web links (URLs) are completely rejected.
-*   **Safe Fallbacks:** Unsupported cases gracefully fall back to an explicit empty context (no match) instead of hallucinating fabricated actions.
+## 3. Why This Is Not Just an LLM Wrapper
+
+**Generation is treated as untrusted.**
+
+| Principle | Implementation |
+| :--- | :--- |
+| Language flexibility separated from action authority | Query enrichment aids retrieval; it never becomes evidence for device actions |
+| Source-backed evidence | All troubleshooting content derived from supplied SIIS source material |
+| Strict catalog routing | Deep-links must exactly match the supplied catalog; broad/parent-menu substitutions rejected |
+| Dependency-ordered actions | Safe/reversible actions first, critical/destructive operations last |
+| Schema enforcement | Pydantic v2 strict validation before returning any response |
+| Zero URL leakage | Web links (`http`, `https`, `www`) absolutely prohibited in output |
+| Explicit fallback | Unsupported cases return empty contexts (`no_match`) instead of fabricated actions |
+| Guarded cache | Cached plans are fingerprinted against source and catalog state |
+
+---
 
 ## 4. Architecture
 
 ```mermaid
 graph TD
-    A[Informal Complaint] --> B[Query Enrichment]
-    B --> C[SIIS Source + Action Extraction]
-    C --> D[Deep-link Catalog Retrieval]
-    D --> E[Exact-screen Gate]
-    E --> F[Action Dependency Ordering]
-    F --> G{Deterministic Validation}
+    A["Informal Complaint"] --> B["Query Enrichment<br/>(enrichment.py)"]
+    B --> C["SIIS Source + Action Extraction<br/>(extraction.py)"]
+    C --> D["Deep-link Catalog Retrieval<br/>(retrieval.py)"]
+    D --> E["Exact-screen Gate<br/>(retrieval.py)"]
+    E --> F["Action Dependency Ordering<br/>(ordering.py)"]
+    F --> G{"Deterministic Validation<br/>(validation.py)"}
     
-    G -- Invalid / Unsupported --> H[Explicit Fallback]
-    G -- Valid --> I[Structured Troubleshooting Plan]
+    G -- "Invalid / Unsupported" --> H["Explicit Fallback<br/>(fallback: no_match)"]
+    G -- "Valid" --> I["Structured Troubleshooting Plan"]
     
-    I --> J[(SQLite Fast-path Cache)]
-    J --> K[REST API / Web UI]
+    I --> J[("SQLite Fast-path Cache<br/>(cache.py)")]
+    J --> K["REST API / Web UI<br/>(api.py, ui.py)"]
 ```
 
-**System Modules:**
-*   `enrichment.py`: Normalizes colloquial text into a canonical technical query and generates variations.
-*   `extraction.py`: Parses unstructured reference text into a structured goal object containing atomic steps.
-*   `retrieval.py`: Maps step groups to specific device settings screens using lexical and character n-gram scoring.
-*   `ordering.py`: Ensures correct action hierarchy (e.g., non-invasive settings first, critical/destructive last).
-*   `validation.py`: Enforces strict Pydantic schemas, URL constraints, and exact field syntax.
-*   `cache.py`: Manages the SQLite fast-path cache for previously encountered valid plans.
+### Pipeline Stages
+
+| Stage | Module | What it does |
+| :--- | :--- | :--- |
+| **Query Enrichment** | `enrichment.py` | Normalizes colloquial text into a canonical technical query; generates 9 paraphrase variations as retrieval aids (never as new evidence) |
+| **SIIS Retrieval** | `data.py`, `pipeline.py` | Finds the corresponding supplied SIIS content for the complaint, or accepts explicit `siis_response` context |
+| **Action Extraction** | `extraction.py` | Parses unstructured SIIS reference text into structured action drafts with atomic steps |
+| **Catalog Retrieval** | `retrieval.py` | Ranks catalog metadata with lexical and character n-gram scoring; maps step groups to specific device settings screens |
+| **Exact-screen Gate** | `retrieval.py` | Rejects broad/parent-menu substitutions; requires exact screen match from catalog |
+| **Action Ordering** | `ordering.py` | Topological sort by dependency graph and disruptiveness; safe/reversible first, critical last |
+| **Validation** | `validation.py` | Pydantic schema conformance, deep-link catalog integrity, zero URL leakage, action structure rules |
+| **Cache** | `cache.py` | SQLite-backed fast-path cache with source/catalog fingerprint guards |
+| **API & UI** | `api.py`, `ui.py` | REST endpoints and Samsung One UI-inspired web interface |
+
+---
 
 ## 5. Knowledge & Data Sources
 
-Troubleshooting actions and steps are derived strictly from supplied source material; the engine does not fabricate unsupported device actions.
+> Troubleshooting actions and steps are derived from supplied source material; the engine does not fabricate unsupported device actions.
 
-Based on the actual implemented repository data (`theme02_input.txt`, `reference_navigation.json`):
-*   **Deep-link Catalog:** 578 catalog records (577 actionable URIs and one reserved placeholder).
-*   **SIIS Corpus:** 20 complaint / SIIS reference pairs.
-*   **Benchmarks:** Local benchmark evaluations (`benchmark-results.json`) and 20-case kit evaluations (`kit-evaluation-results.json`).
+| Asset | File | Details |
+| :--- | :--- | :--- |
+| Deep-link Catalog | `data/deeplinks.json` | 578 catalog records (577 actionable Bixby URIs + 1 reserved placeholder) |
+| SIIS Corpus | `data/siis_responses.json` | 20 complaint / SIIS reference pairs |
+| Complaint Input | `data/theme02_input.txt` | 20 real-world complaint lines for evaluation |
+| Reference Fixtures | `data/reference_navigation.json`, `data/reference_sample.json` | Golden contract-test cases (PDF navigation example, screen-damage example) |
+| Schema Definition | `src/samsung_engine/schema.py` | Strict Pydantic v2 schema following the Theme02_Input_Kit contract |
+| Benchmark Artifact | `benchmark-results.json` | 30 cold + 30 cached latency measurements |
+| Evaluation Artifact | `kit-evaluation-results.json` | 20-case matched/no-match evaluation report |
+
+---
 
 ## 6. Deep-Link Safety
 
-The engine resolves actions explicitly against the supplied catalog (`reference_navigation.json`). Deep-links are never freely generated URLs. 
+This is a key theme requirement. The engine resolves actions exclusively against the supplied catalog.
 
-*   Exact-screen matching is strictly enforced. The catalog's masked Bixby URIs are copied as supplied. The reserved `bixby://dummy_positive` URI can be used for a vetted concrete Settings screen named in a literal SIIS path after exact catalog lookup fails.
-*   Unsupported or unresolved routing correctly results in a fallback state (`fallback: "no_match"`) rather than silently redirecting to a random or generic setting.
+- Deep-links are **never freely generated** URLs. Every actionable link must exist in `data/deeplinks.json`.
+- **Exact-screen matching** is enforced. Broad or parent-menu URIs are rejected.
+- The reserved `bixby://dummy_positive` placeholder is restricted to vetted concrete Settings screens named in literal SIIS paths after exact catalog lookup fails. Its description and message name that screen in 5-7 words.
+- Unsupported or unresolved routing returns `fallback: "no_match"` rather than silently substituting a random setting.
 
-*Note: Device-specific URI execution depends on a supported Samsung environment; the prototype exposes the link and graceful fallback behavior without claiming successful execution on a non-Samsung browser.*
+> Device-specific URI execution depends on a supported Samsung environment; the prototype exposes the link and graceful fallback behavior without claiming successful device execution.
+
+---
 
 ## 7. Action Ordering & Safety
 
-Extracted actions are categorized based on their safety and impact:
-*   `auto`: Recommended action (Standard configuration screens reachable via deep-link).
-*   `manual`: Manual step (Physical interventions, wiping, replacing hardware).
-*   `critical`: Important safety step (Disruptive/irreversible operations like factory reset or firmware update).
+Actions are categorized by safety and impact:
 
-The system enforces safe action ordering. For example, if a user reports physical screen damage, the system orders **Back Up Phone Data** (a safe, necessary prerequisite) before **Schedule Screen Repair Service** (a manual step).
+| Category | Frontend Label | Description |
+| :--- | :--- | :--- |
+| `auto` | Recommended action | Standard configuration screens reachable via deep-link |
+| `manual` | Manual step | Physical interventions, wiping, replacing hardware |
+| `critical` | Important safety step | Disruptive/irreversible operations (factory reset, firmware update) |
+
+**Ordering logic** (implemented in `ordering.py`):
+
+```
+Safe / reversible actions (low disruptiveness)
+  -> Verification where available
+    -> Manual / critical actions (high disruptiveness)
+```
+
+**Example:** For a cracked-screen complaint, the system orders **Back Up Phone Data** (safe prerequisite) before **Schedule Screen Repair Service** (manual step). This is enforced by the dependency graph, not by convention.
+
+---
 
 ## 8. Validation
 
-The final response is returned **only after deterministic checks pass**. The validation layer (`validation.py`) enforces:
-*   Pydantic response schema conformance.
-*   Deep-link catalog integrity (must exactly match known catalog entries).
-*   Zero-leak URL constraint (absolute prohibition of `http`, `https`, `www` links).
-*   Action hierarchy and group structure rules.
+> The final response is returned only after deterministic checks pass.
+
+The validation layer (`validation.py`) enforces:
+
+- **Response schema conformance** (Pydantic v2 strict mode, `extra="forbid"`)
+- **Deep-link catalog integrity** (every `actionableDeeplink` must exactly match a known catalog entry)
+- **Zero-leak URL constraint** (regex scan for `http`, `https`, `www` across entire serialized response)
+- **Action structure rules** (no duplicate actions, critical actions ordered last, manual actions cannot carry deep-links, auto actions must carry deep-links)
+- **Validation deep-link pairing** (validation links must be paired with their catalog-backed action)
+- **Fallback validation** (matched plans must not carry a fallback; empty contexts require explicit fallback metadata)
+
+---
 
 ## 9. Caching & Fast Path
 
-A persistent SQLite cache (`.cache/`) enables a fast-path resolution for previously encountered issues. 
-*   Valid, source-guarded plans are fingerprinted and stored.
-*   A query matching a cached semantic footprint bypasses the full extraction pipeline.
-*   The cache provides a massive latency reduction for repeated issues. 
+The SQLite cache (`.cache/plans.sqlite3`) enables fast-path resolution for previously encountered issues.
 
-**Measured Results (Localhost benchmark, see `benchmark-results.json`):**
-*   **Cold Request (p95):** ~21.5 ms (In-process pipeline)
-*   **Cached Request (p95):** ~0.7 ms (In-process pipeline)
+- Valid, source-guarded plans are **fingerprinted** using a composite key of SIIS source hash and extracted procedure shape hash.
+- A query matching a cached footprint bypasses the full extraction pipeline.
+- Cache entries are **source/catalog guarded**: two complaints that reference the same SIIS article but extract different procedure subsets receive separate cache entries.
 
-*(Note: These figures exclude process startup, remote network traffic, and model provider inference delays).*
+**Measured latency** (from `benchmark-results.json`, 30 iterations each, Galaxy S24 Ultra black-screen complaint, excluding process/server startup):
 
-## 10. Tech Stack
+| Path | Cold p50 / p95 / p99 | Cached p50 / p95 / p99 |
+| :--- | ---: | ---: |
+| In-process pipeline | 20.6 / 21.5 / 21.6 ms | 0.5 / 0.7 / 0.8 ms |
+| Localhost HTTP round trip | 22.0 / 23.2 / 27.1 ms | 1.7 / 1.9 / 1.9 ms |
+
+Both cold p95 and cached p95 meet the challenge targets (cold p95 <= 8000 ms; cached p95 <= 300 ms).
+
+---
+
+## 10. 20-Case Kit Evaluation
+
+From `kit-evaluation-results.json` (all 20 lines of `theme02_input.txt`):
+
+| Metric | Result |
+| :--- | :--- |
+| Input cases | 20 |
+| Matched plans | 10 |
+| Explicit no-match | 10 |
+| Validation failures | 0 |
+| Mapping gaps | 0 |
+| Schema-valid (matched) | 10 / 10 |
+
+All 10 matched plans passed the supplied schema. All 10 no-match cases returned explicit `fallback: "no_match"` with empty contexts. Zero validation failures.
+
+> A high match count alone does not establish that a plan is relevant to the user's symptom. The 10 no-matches are explicit coverage gaps, not validation errors.
+
+---
+
+## 11. Tech Stack
 
 | Layer | Technology |
 | :--- | :--- |
-| **Engine** | Python 3.10+ |
-| **Retrieval** | Lexical + Character n-gram scoring |
-| **Validation**| Pydantic v2 |
-| **API** | Python HTTP Server (`api.py`) |
-| **Cache** | SQLite (`cache.py`) |
-| **Runtime** | Docker |
-| **UI** | Vanilla HTML/CSS/JS (Samsung One UI Inspired) |
-| **Testing** | Pytest |
+| **Language** | Python 3.10+ (3.12-slim Docker base) |
+| **Schema & Validation** | Pydantic v2 (`>=2.5,<3`) |
+| **Retrieval** | Lexical + character n-gram scoring with exact-screen gate |
+| **API** | Python `http.server` (stdlib) |
+| **Cache** | SQLite |
+| **Container** | Docker |
+| **UI** | Vanilla HTML / CSS / JS (Samsung One UI-inspired, light-first) |
+| **Testing** | Pytest (32 tests across 4 test files) |
 
-## 11. Run it
+---
 
-Requires Python 3.10 or newer. From this directory:
+## 12. API
 
-```bash
-./scripts/bootstrap
-./scripts/doctor
-./scripts/test
-./scripts/run
+### `GET /health`
+
+Returns service status and loaded catalog count.
+
+### `POST /v1/troubleshoot`
+
+Accepts a complaint and returns a structured troubleshooting plan.
+
+**Request:**
+```json
+{
+  "query": "The mobile phone screen is cracked and flashes intermittently."
+}
 ```
 
-In another terminal:
+**Optional field:** `siis_response` (string) - explicit SIIS reference text to use instead of automatic lookup.
+
+**Verified example artifacts:**
+- [Black-screen request](examples/theme02_black_screen_request.json) / [response](examples/theme02_black_screen_response.json)
+- [Cracked/flashing-screen request](examples/theme02_sample_damage_request.json) / [response](examples/theme02_sample_damage_response.json)
+- [20-line JSONL evaluation output](examples/theme02_results.jsonl)
+
+---
+
+## 13. Run It
+
+Requires Python 3.10 or newer.
+
+```bash
+./scripts/bootstrap        # Install dependencies
+./scripts/doctor           # Verify catalog, SIIS, references loaded
+./scripts/test             # Run 32 tests
+./scripts/run              # Start API + UI on port 8000
+```
+
+Then open [http://127.0.0.1:8000](http://127.0.0.1:8000) in a browser, or call the API:
 
 ```bash
 curl -sS http://127.0.0.1:8000/health
 curl -sS http://127.0.0.1:8000/v1/troubleshoot \
   -H 'Content-Type: application/json' \
-  -d @examples/theme02_black_screen_request.json
+  -d '{"query": "The mobile phone screen is cracked and flashes intermittently."}'
 ```
 
-Optional container run:
-
+**Docker:**
 ```bash
 docker build -t samsung-theme02 .
 docker run --rm -p 8000:8000 samsung-theme02
 ```
 
-## 12. Evaluation & Artifacts
+**Evaluation scripts:**
+```bash
+./scripts/benchmark        # 30 cold + 30 cached latency report
+./scripts/evaluate-kit     # Process all 20 input-file complaints
+./scripts/export-results   # Regenerate 20-line JSONL response artifact
+```
 
-Verified HTTP artifacts: 
-*   [black-screen request](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026/blob/main/examples/theme02_black_screen_request.json) and [response](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026/blob/main/examples/theme02_black_screen_response.json)
-*   [cracked/flashing-screen request](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026/blob/main/examples/theme02_sample_damage_request.json) and [response](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026/blob/main/examples/theme02_sample_damage_response.json). The second response demonstrates a catalog-backed backup action with its paired validation deep link, followed by manual service.
+---
 
-Run `./scripts/benchmark` for a local 30 cold / 30 cached request latency report using the supplied Galaxy S24 Ultra complaint. It reports both in-process pipeline timing and localhost HTTP round trips. Process and server startup are excluded.
+## 14. Current Limitations
 
-Run `./scripts/evaluate-kit` to process all 20 lines of `theme02_input.txt` and the paired SIIS JSON queries separately. It reports matched plans, explicit no-matches, validation failures, and mapping gaps. A high match count alone does not establish that a plan is relevant to the user's symptom.
+These are explicitly acknowledged, not hidden.
 
-Run `./scripts/export-results` to regenerate [the 20-line JSONL response artifact](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026/blob/main/examples/theme02_results.jsonl) from the actual input file. Every line is a validated API response, including explicit no-match rows.
+- **Coverage:** 10 of 20 supplied complaints currently return `no_match`. This is explicit coverage, not a validation error.
+- **No hosted model:** The service is fully deterministic and does not use a hosted LLM or network calls. Retrieval uses lexical and character n-gram scoring; BM25, dense embeddings, and on-device deep-link viability testing are not implemented.
+- **No live device state:** No Galaxy device state or deep-link execution is available in this local environment. The reserved `bixby://dummy_positive` URI does not demonstrate a working device link.
+- **Retrieval scope:** Retrieval uses metadata lexical and character n-gram scoring with an exact-screen gate. It does not include BM25, dense embeddings, or semantic similarity models.
+- **Plan relevance:** The 10 matched plans passed structural validation and limited complaint/action review. Broader human review remains necessary before customer use.
+- **Multi-intent:** The splitter handles selected independent symptoms and multiple explicit SIIS Settings paths. It is not comprehensive.
+- **Scores:** Plan scores are heuristic and uncalibrated, not measured diagnostic probabilities.
+- **Paraphrase cache:** The semantic paraphrase cache-hit target has not been measured on a held-out query set.
 
-The latest [benchmark report](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026/blob/main/benchmark-results.json) and [20-case report](https://github.com/hedoescode-mayank/PRISM_GENAI_HACKATHON_Y2026/blob/main/kit-evaluation-results.json) are included for review.
+---
+
+## 15. Roadmap
+
+| Priority | Integration Point |
+| :--- | :--- |
+| **High** | Dense embedding retrieval (BM25 / sentence-transformers) for broader coverage |
+| **High** | On-device deep-link execution verification via Samsung Knox / Bixby runtime |
+| **Medium** | Live device-state integration for validation deep-link verification |
+| **Medium** | Expand SIIS corpus beyond the 20 supplied complaint pairs |
+| **Medium** | Multi-intent handling for compound complaints |
+| **Low** | Calibrated confidence scoring from retrieval + extraction signals |
+| **Low** | Semantic paraphrase cache with measured held-out query performance |
+
+---
+
+## Repository Structure
+
+```
+samsungv1/
+  src/samsung_engine/
+    api.py              # HTTP server and REST endpoints
+    benchmark.py        # Latency benchmark runner
+    cache.py            # SQLite fast-path cache
+    data.py             # Data loading and catalog management
+    doctor.py           # Environment and data health check
+    enrichment.py       # Query normalization and variation generation
+    evaluate_kit.py     # 20-case evaluation runner
+    export_results.py   # JSONL result exporter
+    extraction.py       # SIIS text to structured action extraction
+    ordering.py         # Action dependency graph and topological sort
+    pipeline.py         # End-to-end troubleshooting pipeline
+    retrieval.py        # Catalog retrieval with exact-screen gate
+    schema.py           # Pydantic v2 strict schema definitions
+    state.py            # Device-state provider abstraction
+    ui.py               # Web UI (Samsung One UI-inspired)
+    validation.py       # Deterministic validation layer
+  data/
+    deeplinks.json      # 578 Bixby deep-link catalog records
+    siis_responses.json # 20 SIIS reference pairs
+    theme02_input.txt   # 20 complaint lines for evaluation
+    reference_*.json    # Golden contract-test fixtures
+  tests/                # 32 Pytest tests across 4 files
+  scripts/              # bootstrap, doctor, test, run, benchmark, evaluate-kit, export-results
+  examples/             # Verified request/response pairs and JSONL evaluation output
+  Dockerfile            # Python 3.12-slim container
+  pyproject.toml        # Project metadata and dependencies
+```
